@@ -9,9 +9,7 @@ import Foundation
 import UIKit
 
 struct SetGame {
-    
-    //TODO:
-    
+        
     var cards = Array <Card>()
     
     private(set) var clickedCards = Array <Card>()
@@ -20,7 +18,7 @@ struct SetGame {
     
     private(set) var isMatch = false
     
-//    private(set) var matchedCards = Array <Card>()
+    private(set) var gameScore = 0
 
     
     mutating func addCardIndexToClickedCards(index: Int) {
@@ -29,25 +27,23 @@ struct SetGame {
         } else {
             if let indexOfCardPressedTwice = clickedCards.firstIndex(of: cardChoices[index]) {
             clickedCards.remove(at: indexOfCardPressedTwice)
+                gameScore -= 1
             }
         }
     }
     
-//    mutating func addCardToMatchedCards(matchedCard: Card) {
-//        matchedCards += [matchedCard]
-//    }
     
     mutating func clearClickedCardsArray () {
         clickedCards = []
     }
 
-    mutating func checkForMatch(index: Int){
+    mutating func checkForMatch(index: Int) {
         addCardIndexToClickedCards(index: index)
-        //        let sets: (numbersSet: Set<Int>, symbolsSet: Set<String>, shadingsSet: Set<String>, colorsSet: Set<UIColor>)
+        
         if clickedCards.count == 3 {
             var numbersSet = Set<Int>()
             var shapesSet = Set<String>()
-            var shadingsSet = Set<String>()
+            var shadingsSet = Set<DeckOfCards.CardShade>()
             var colorsSet = Set<UIColor>()
             
             for index in clickedCards.indices {
@@ -57,26 +53,21 @@ struct SetGame {
                 colorsSet.insert(clickedCards[index].color)
             }
             
-            var score = 0
-            if numbersSet.count != 2 { score += 1 }
-            if shapesSet.count != 2 { score += 1 }
-            if shadingsSet.count != 2 { score += 1 }
-            if colorsSet.count != 2 { score += 1 }
-            
-            if score == 4 {
+            if numbersSet.count != 2, shapesSet.count != 2, shadingsSet.count != 2,colorsSet.count != 2 {
                 isMatch = true
-                
+                gameScore += 2
+            
+            } else {
+                gameScore -= 1
             }
         }
     }
     
     mutating func replaceCards() {
-//        let cardsToReplace = clickedCards.count
         for index in clickedCards.indices {
             if cards.count > 0 {
                 if let locOfCard = cardChoices.firstIndex(of: clickedCards[index]) {
                     cardChoices[locOfCard] = cards.remove(at: index)
-//                    clickedCards.remove(at: index)
                 }
             } else {
                 break
@@ -105,7 +96,6 @@ struct SetGame {
         
     
         mutating func chooseCard(at index: Int) {
-//            assert(cards.indices.contains(index), "SetGame.chooseCard(at: \(index)): chosen index not in the cards")
             
             switch(clickedCards.count){
             
@@ -115,15 +105,13 @@ struct SetGame {
             
             case 3:
                 fourCardsSelected(index: index)
-//                clearClickedCardsArray()
-//                addCardIndexToClickedCards(index: index)
+
             default:
                 break
             }
         }
     
     mutating func addCardsToTheTableCards(number: Int) {
-        
         for _ in 0...number {
             if cards.count > 0 {
                 cardChoices += [cards.remove(at: 0)]
@@ -132,6 +120,8 @@ struct SetGame {
                 return
             }
         }
+        gameScore -= 3
+
     }
     
     mutating func replaceCardsInTable(number: Int) {
@@ -144,10 +134,7 @@ struct SetGame {
     init(numberOfCards: Int) {
         cards = DeckOfCards.getInitialDeck()
         cards.shuffle()
-//        cardChoices = []
-        //need to change to 12
-        for _ in 0...11 {
-//            print(cards.remove(at: 0))
+        for _ in 0..<numberOfCards {
             cardChoices += [cards.remove(at: 0)]
         }
         clearClickedCardsArray()

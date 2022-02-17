@@ -12,16 +12,17 @@ struct Card: Hashable, Equatable {
     
     var hashValue: Int { return identifier }
     
+//    let number: DeckOfCards.CardNumber
+//    let shape: DeckOfCards.CardShape
+//    let shading : DeckOfCards.CardShade
+//    let color : DeckOfCards.CardColor
+    
     let number: Int
     let shape: String
-    let shading : String
+    let shading : DeckOfCards.CardShade
     let color : UIColor
     
-//    var isMatched = false
-//    var isClicked = false
-    
-    //change to private
-     var identifier: Int
+    private var identifier: Int
     
     private static var identifierFactory = 0
 
@@ -36,11 +37,12 @@ struct Card: Hashable, Equatable {
         return identifierFactory
     }
     
-    init(number: Int, shape: String, shading:String, color: UIColor) {
+    init(number: DeckOfCards.CardNumber, shape: DeckOfCards.CardShape, shading: DeckOfCards.CardShade, color: DeckOfCards.CardColor) {
+        
         self.identifier = Card.getUniqueIdentifier()
-        self.number = number
-        self.shape = shape
+        self.number = number.getNumberInt()
+        self.shape = shape.getShapeString()
         self.shading = shading
-        self.color = color
+        self.color = color.getUIColor()
     }
 }

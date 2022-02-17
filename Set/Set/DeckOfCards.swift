@@ -10,28 +10,64 @@ import Foundation
 
 class DeckOfCards {
     
+    enum CardNumber: CaseIterable {
+        case first, second, third
+        
+        func getNumberInt() -> Int {
+            switch self {
+            case .first:
+                return 1
+            case .second:
+                return 2
+            case .third:
+                return 3
+            }
+        }
+    }
+    
+    enum CardShape: CaseIterable {
+        case circle, triangle, square
+        
+        func getShapeString() -> String {
+            switch self {
+            case .circle:
+                return "●"
+            case .triangle:
+                return "▲"
+            case .square:
+                return "■"
+            }
+        }
+    }
+    
+    enum CardShade: CaseIterable {
+        case solid, striped, open
+    }
+    
+    enum CardColor: CaseIterable {
+        case red, green, purple
+        
+        func getUIColor() -> UIColor {
+            switch self {
+            case .red:
+                return UIColor.red
+            case .green:
+                return UIColor.green
+            case .purple:
+                return UIColor.purple
+            }
+        }
+    }
+    
     private static var deck = Array <Card>()
-    
-    private static var numbersArray = [1,2,3]
-//    private static enum numbers {
-//        case 1: 1
-//        case 2: 2
-//    }
-    
-    private static var shapesArray = ["▲","●","■"]
-    
-    private static var shadingArray = ["solid", "striped", "open"]
-    
-    private static var colorsArray = [UIColor.red, UIColor.green,  UIColor.purple]
-    
     
     static func getInitialDeck() -> [Card] {
         self.deck = []
-        for number in numbersArray.indices {
-            for shape in shapesArray.indices {
-                for shade in shadingArray.indices {
-                    for clr in colorsArray.indices {
-                        let card = Card(number: numbersArray[number], shape: shapesArray[shape], shading: shadingArray[shade], color: colorsArray[clr])
+        for typeOfNumber in CardNumber.allCases {
+            for typeOfShape in CardShape.allCases {
+                for typeOfShade in CardShade.allCases {
+                    for typeOfColor in CardColor.allCases {
+                        let card = Card(number: typeOfNumber, shape: typeOfShape, shading: typeOfShade, color: typeOfColor)
                         deck += [card]
                     }
                 }
