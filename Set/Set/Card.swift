@@ -12,17 +12,19 @@ struct Card: Hashable, Equatable {
     
     var hashValue: Int { return identifier }
     
-    private(set) var number: Int
-    private(set) var shape: String
-    private(set) var shading : String
-    private(set) var color : UIColor
+    let number: Int
+    let shape: String
+    let shading : String
+    let color : UIColor
     
 //    var isMatched = false
 //    var isClicked = false
     
+    //change to private
+     var identifier: Int
+    
     private static var identifierFactory = 0
 
-   private var identifier: Int
         
     static func == (lhs: Card, rhs: Card) -> Bool {
         return lhs.identifier == rhs.identifier
