@@ -23,6 +23,8 @@ class ViewController: UIViewController {
             button.backgroundColor = UIColor.white
             updateButtonsLabel()
         }
+//        print(game.cardChoices)
+
     }
     
     @IBAction func resetGame(_ sender: UIButton) {
@@ -36,7 +38,10 @@ class ViewController: UIViewController {
             let attributedString = NSAttributedString(string: "")
             button.setAttributedTitle(attributedString, for: .normal)
         }
-        
+//        print(game.cards.count)
+//        print(game.cardChoices)
+//        updateButtonsLabel()
+
         for index in 0...11 {
             let button = cardButtons[index]
             button.backgroundColor = UIColor.white
@@ -158,3 +163,8 @@ class ViewController: UIViewController {
 
 }
 
+/*
+ Set.Card(number: 1, shape: "■", shading: "solid", color: UIExtendedSRGBColorSpace 1 0 0 1, identifier: 19)
+ 
+ Set.Card(number: 1, shape: "■", shading: "solid", color: UIExtendedSRGBColorSpace 1 0 0 1, identifier: 100),
+ */

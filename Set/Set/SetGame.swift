@@ -144,6 +144,7 @@ struct SetGame {
     init(numberOfCards: Int) {
         cards = DeckOfCards.getInitialDeck()
         cards.shuffle()
+//        cardChoices = []
         //need to change to 12
         for _ in 0...11 {
 //            print(cards.remove(at: 0))

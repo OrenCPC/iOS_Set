@@ -26,6 +26,7 @@ class DeckOfCards {
     
     
     static func getInitialDeck() -> [Card] {
+        self.deck = []
         for number in numbersArray.indices {
             for shape in shapesArray.indices {
                 for shade in shadingArray.indices {
