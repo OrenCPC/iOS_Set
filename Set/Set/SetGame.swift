@@ -46,23 +46,21 @@ struct SetGame {
         if isSetOnScreen() != nil {
             gameScore -= 20
             if let testCards = isSetOnScreen() {
-                print(cardChoices.firstIndex(of: testCards.0))
-                print(cardChoices.firstIndex(of: testCards.1))
-                print(cardChoices.firstIndex(of: testCards.2))
-
-
+//                print(cardChoices.firstIndex(of: testCards.0))
+//                print(cardChoices.firstIndex(of: testCards.1))
+//                print(cardChoices.firstIndex(of: testCards.2))
             }
             
         }
     }
     
-    func isSetOnScreen() -> (Card,Card,Card)? {
+    func isSetOnScreen() -> [Card]? {
         for cardA in cardChoices {
             for cardB in cardChoices {
                 for cardC in cardChoices {
                     if cardA != cardB, cardB != cardC, cardC != cardA {
                         if answerForMatch(cardsToBeChecked: [cardA,cardB,cardC]) {
-                            return (cardA,cardB,cardC)
+                            return [cardA,cardB,cardC]
                         }
                     }
                 }
@@ -95,9 +93,7 @@ struct SetGame {
         if clickedCards.count == 3, answerForMatch(cardsToBeChecked: clickedCards) {
             isMatch = true
             gameScore += 2
-        }
-
-        else {
+        } else {
                 gameScore -= 1
             }
         }
@@ -165,7 +161,7 @@ struct SetGame {
         for _ in 0...number {
                 cardChoices += [cards.remove(at: 0)]
         }
-        gameScore -= 3
+        if isSetOnScreen() != nil { gameScore -= 3 }
     }
     
     mutating func replaceCardsInTable(number: Int) {

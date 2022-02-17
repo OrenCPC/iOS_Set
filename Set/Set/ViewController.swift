@@ -13,6 +13,8 @@ class ViewController: UIViewController {
     
     var numberOfCards = 12
     
+    var cheatMode = false
+    
     private lazy var game = SetGame(numberOfCards: numberOfCards)
     
     override func viewDidLoad() {
@@ -106,6 +108,37 @@ class ViewController: UIViewController {
             game.chooseCard(at: cardNumber)
             updateViewFromModel()
         }
+    }
+    
+    
+    @IBAction func touchCheat(_ sender: UIButton) {
+
+        if let matchingThreeCardsArray = game.isSetOnScreen() {
+                
+                if !cheatMode {
+                    updateViewFromModel()
+
+                for i in 0..<matchingThreeCardsArray.count {
+                    
+                    let indexOnScreen = game.cardChoices.firstIndex(of: matchingThreeCardsArray[i])
+                let button = cardButtons[indexOnScreen!]
+                    button.paintButton(borderWidth: 3.0, borderColor: UIColor.purple, cornerRadius: 8.0)
+                }
+                cheatMode = true
+                    
+                } else {
+                    for i in 0..<matchingThreeCardsArray.count {
+                        let indexOnScreen = game.cardChoices.firstIndex(of: matchingThreeCardsArray[i])
+                    let button = cardButtons[indexOnScreen!]
+                        button.clearPaintButton()
+
+                        updateViewFromModel()
+                        cheatMode = false
+                    }
+                }
+        }
+//        cheatMode = false
+        
     }
     
     func updateViewFromModel() {
