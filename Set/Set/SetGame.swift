@@ -15,10 +15,15 @@ struct SetGame {
     private(set) var clickedCards = Array <Card>()
     
     private(set) var cardChoices = Array <Card>()
+
+    private var previousClick: Date
+
     
     private(set) var isMatch = false
     
     private(set) var gameScore = 0
+    
+
 
     
     mutating func addCardIndexToClickedCards(index: Int) {
@@ -97,6 +102,16 @@ struct SetGame {
     
         mutating func chooseCard(at index: Int) {
             
+            //The time of the last click a player made plus another 30 seconds
+            let future = Date(timeInterval: 30, since: previousClick)
+            
+            let fallsBetween = (previousClick ... future).contains(Date())
+            //If the player hadn't play for 30 seconds he is punished with -3 points
+            if !fallsBetween {
+                gameScore -= 3
+            }
+            previousClick = Date()
+            
             switch(clickedCards.count){
             
             case 0,1: addCardIndexToClickedCards(index: index)
@@ -125,6 +140,8 @@ struct SetGame {
     }
     
     init(numberOfCards: Int) {
+        previousClick = Date()
+
         cards = DeckOfCards.getInitialDeck()
         cards.shuffle()
         for _ in 0..<numberOfCards {
