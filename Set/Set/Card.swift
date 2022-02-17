@@ -12,15 +12,65 @@ struct Card: Hashable, Equatable {
     
     var hashValue: Int { return identifier }
     
-//    let number: DeckOfCards.CardNumber
-//    let shape: DeckOfCards.CardShape
-//    let shading : DeckOfCards.CardShade
-//    let color : DeckOfCards.CardColor
+    enum CardNumber: CaseIterable {
+        case first, second, third
+        
+        func getNumberInt() -> Int {
+            switch self {
+            case .first:
+                return 1
+            case .second:
+                return 2
+            case .third:
+                return 3
+            }
+        }
+    }
     
-    let number: Int
-    let shape: String
-    let shading : DeckOfCards.CardShade
-    let color : UIColor
+    enum CardShape: CaseIterable {
+        case circle, triangle, square
+        
+        func getShapeString() -> String {
+            switch self {
+            case .circle:
+                return "●"
+            case .triangle:
+                return "▲"
+            case .square:
+                return "■"
+            }
+        }
+    }
+    
+    enum CardShade: CaseIterable {
+        case solid, striped, open
+    }
+    
+    enum CardColor: CaseIterable {
+        case red, green, purple
+        
+        func getUIColor() -> UIColor {
+            switch self {
+            case .red:
+                return UIColor.red
+            case .green:
+                return UIColor.green
+            case .purple:
+                return UIColor.purple
+            }
+        }
+    }
+    
+    
+    
+    
+    
+    let number: CardNumber
+    let shape: CardShape
+//    let shading : DeckOfCards.CardShade
+    let shading : CardShade
+
+    let color : CardColor
     
     private var identifier: Int
     
@@ -37,12 +87,13 @@ struct Card: Hashable, Equatable {
         return identifierFactory
     }
     
-    init(number: DeckOfCards.CardNumber, shape: DeckOfCards.CardShape, shading: DeckOfCards.CardShade, color: DeckOfCards.CardColor) {
+    init(number: CardNumber, shape: CardShape, shading: CardShade, color: CardColor) {
         
         self.identifier = Card.getUniqueIdentifier()
-        self.number = number.getNumberInt()
-        self.shape = shape.getShapeString()
+        
+        self.number = number
+        self.shape = shape
         self.shading = shading
-        self.color = color.getUIColor()
+        self.color = color
     }
 }

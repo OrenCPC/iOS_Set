@@ -43,14 +43,14 @@ struct SetGame {
         if clickedCards.count == 3 {
             var numbersSet = Set<Int>()
             var shapesSet = Set<String>()
-            var shadingsSet = Set<DeckOfCards.CardShade>()
+            var shadingsSet = Set<Card.CardShade>()
             var colorsSet = Set<UIColor>()
             
             for index in clickedCards.indices {
-                numbersSet.insert(clickedCards[index].number)
-                shapesSet.insert(clickedCards[index].shape)
+                numbersSet.insert(clickedCards[index].number.getNumberInt())
+                shapesSet.insert(clickedCards[index].shape.getShapeString())
                 shadingsSet.insert(clickedCards[index].shading)
-                colorsSet.insert(clickedCards[index].color)
+                colorsSet.insert(clickedCards[index].color.getUIColor())
             }
             
             if numbersSet.count != 2, shapesSet.count != 2, shadingsSet.count != 2,colorsSet.count != 2 {
@@ -113,22 +113,15 @@ struct SetGame {
     
     mutating func addCardsToTheTableCards(number: Int) {
         for _ in 0...number {
-            if cards.count > 0 {
                 cardChoices += [cards.remove(at: 0)]
-            }
-            else {
-                return
-            }
         }
         gameScore -= 3
-
     }
     
     mutating func replaceCardsInTable(number: Int) {
         replaceCards()
         clearClickedCardsArray()
         isMatch = false
-        
     }
     
     init(numberOfCards: Int) {

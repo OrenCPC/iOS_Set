@@ -55,9 +55,9 @@ class ViewController: UIViewController {
     
     private func getForegroundColor(card: Card) -> UIColor{
         switch (card.shading) {
-        case .solid: return card.color.withAlphaComponent(1.0)
-        case .striped: return card.color.withAlphaComponent(0.15)
-        default: return card.color
+        case .solid: return card.color.getUIColor().withAlphaComponent(1.0)
+        case .striped: return card.color.getUIColor().withAlphaComponent(0.15)
+        default: return card.color.getUIColor()
         }
     }
     
@@ -70,9 +70,9 @@ class ViewController: UIViewController {
             let attributes: [NSAttributedString.Key: Any] = [
                 .strokeWidth : getStrokeWidth(card: card),//Filled-shading
                 .foregroundColor: getForegroundColor(card: card),
-                .strokeColor : card.color
+                .strokeColor : card.color.getUIColor()
             ]
-            let attributedString = NSAttributedString(string: String(repeating: "\(card.shape)", count: card.number), attributes: attributes)
+            let attributedString = NSAttributedString(string: String(repeating: "\(card.shape.getShapeString())", count: card.number.getNumberInt()), attributes: attributes)
             
             button.setAttributedTitle(attributedString, for: .normal)
         }
@@ -82,7 +82,7 @@ class ViewController: UIViewController {
         if game.cards.count >= 3 {
             if game.isMatch {
                 game.replaceCardsInTable(number: 3)
-                updateViewFromModel()
+//                updateViewFromModel()
             } else {
                 if cardButtons.count >= numberOfCards + 3 {
                     game.addCardsToTheTableCards(number: 3)
