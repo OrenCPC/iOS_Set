@@ -85,6 +85,9 @@ class ViewController: UIViewController {
 //                updateViewFromModel()
             } else {
                 if cardButtons.count >= numberOfCards + 3 {
+                    //
+                    game.punishIfSetExists()
+                    //
                     game.addCardsToTheTableCards(number: 3)
                     for _ in 0...2 {
                         let button = cardButtons[numberOfCards]

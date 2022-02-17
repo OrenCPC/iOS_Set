@@ -41,32 +41,67 @@ struct SetGame {
     mutating func clearClickedCardsArray () {
         clickedCards = []
     }
+    
+    mutating func punishIfSetExists() {
+        if isSetOnScreen() != nil {
+            gameScore -= 20
+            if let testCards = isSetOnScreen() {
+                print(cardChoices.firstIndex(of: testCards.0))
+                print(cardChoices.firstIndex(of: testCards.1))
+                print(cardChoices.firstIndex(of: testCards.2))
+
+
+            }
+            
+        }
+    }
+    
+    func isSetOnScreen() -> (Card,Card,Card)? {
+        for cardA in cardChoices {
+            for cardB in cardChoices {
+                for cardC in cardChoices {
+                    if cardA != cardB, cardB != cardC, cardC != cardA {
+                        if answerForMatch(cardsToBeChecked: [cardA,cardB,cardC]) {
+                            return (cardA,cardB,cardC)
+                        }
+                    }
+                }
+            }
+        }
+        return nil
+
+    }
+    
+    func answerForMatch(cardsToBeChecked: [Card]) -> Bool {
+        
+        var numbersSet = Set<Int>()
+        var shapesSet = Set<String>()
+        var shadingsSet = Set<Card.CardShade>()
+        var colorsSet = Set<UIColor>()
+        
+        cardsToBeChecked.forEach{
+            if let cardIndex = cardChoices.firstIndex(of: $0){
+                numbersSet.insert(cardChoices[cardIndex].number.getNumberInt())
+                shapesSet.insert(cardChoices[cardIndex].shape.getShapeString())
+                shadingsSet.insert(cardChoices[cardIndex].shading)
+                colorsSet.insert(cardChoices[cardIndex].color.getUIColor())
+            }
+        }
+        return numbersSet.count != 2 && shapesSet.count != 2 && shadingsSet.count != 2 && colorsSet.count != 2
+    }
 
     mutating func checkForMatch(index: Int) {
         addCardIndexToClickedCards(index: index)
-        
-        if clickedCards.count == 3 {
-            var numbersSet = Set<Int>()
-            var shapesSet = Set<String>()
-            var shadingsSet = Set<Card.CardShade>()
-            var colorsSet = Set<UIColor>()
-            
-            for index in clickedCards.indices {
-                numbersSet.insert(clickedCards[index].number.getNumberInt())
-                shapesSet.insert(clickedCards[index].shape.getShapeString())
-                shadingsSet.insert(clickedCards[index].shading)
-                colorsSet.insert(clickedCards[index].color.getUIColor())
-            }
-            
-            if numbersSet.count != 2, shapesSet.count != 2, shadingsSet.count != 2,colorsSet.count != 2 {
-                isMatch = true
-                gameScore += 2
-            
-            } else {
+        if clickedCards.count == 3, answerForMatch(cardsToBeChecked: clickedCards) {
+            isMatch = true
+            gameScore += 2
+        }
+
+        else {
                 gameScore -= 1
             }
         }
-    }
+    
     
     mutating func replaceCards() {
         for index in clickedCards.indices {

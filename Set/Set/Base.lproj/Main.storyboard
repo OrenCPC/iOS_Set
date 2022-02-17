@@ -293,13 +293,13 @@
                                 <color key="tintColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="UdY-Hf-CTu">
-                                <rect key="frame" x="20" y="792" width="374" height="50"/>
+                                <rect key="frame" x="5" y="792" width="404" height="50"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="Llm-pf-LGs">
-                                        <rect key="frame" x="0.0" y="0.0" width="374" height="50"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="404" height="50"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GtB-8T-CEe">
-                                                <rect key="frame" x="0.0" y="0.0" width="208.5" height="50"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="238.5" height="50"/>
                                                 <state key="normal" title="Button"/>
                                                 <buttonConfiguration key="configuration" style="plain" title="New Game">
                                                     <backgroundConfiguration key="background">
@@ -313,7 +313,7 @@
                                                 </connections>
                                             </button>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Score: 0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VKr-1a-nVa">
-                                                <rect key="frame" x="228.5" y="0.0" width="145.5" height="50"/>
+                                                <rect key="frame" x="258.5" y="0.0" width="145.5" height="50"/>
                                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="40"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
@@ -349,10 +349,10 @@
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="lZz-RL-U60" secondAttribute="trailing" constant="20" id="Egy-8g-IWo"/>
                             <constraint firstItem="DHb-e5-Kka" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="IyN-qQ-XEq"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="UdY-Hf-CTu" secondAttribute="bottom" constant="20" id="Jo4-bC-4Xo"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="UdY-Hf-CTu" secondAttribute="trailing" constant="20" id="aMt-Qo-vcS"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="UdY-Hf-CTu" secondAttribute="trailing" constant="5" id="aMt-Qo-vcS"/>
                             <constraint firstItem="lZz-RL-U60" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="ebv-en-OfN"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="DHb-e5-Kka" secondAttribute="trailing" constant="20" id="iNE-GI-BxF"/>
-                            <constraint firstItem="UdY-Hf-CTu" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="nRk-LR-rYc"/>
+                            <constraint firstItem="UdY-Hf-CTu" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="5" id="nRk-LR-rYc"/>
                             <constraint firstItem="DHb-e5-Kka" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="10" id="rx9-O1-WmV"/>
                         </constraints>
                     </view>
