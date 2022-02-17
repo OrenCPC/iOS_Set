@@ -21,7 +21,8 @@ struct SetGame {
     
     private(set) var isMatch = false
     
-    private(set) var gameScore = 0
+    //TODO: change to private(set)
+     var gameScore = 0
     
 
 
