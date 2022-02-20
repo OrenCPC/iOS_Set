@@ -115,8 +115,8 @@ class ViewController: UIViewController {
     @IBAction func touchCheat(_ sender: UIButton) {
         if let matchingThreeCardsArray = game.isSetOnScreen() ,!game.isMatch {
             game.executeCheat(matchingThreeCardsArray: matchingThreeCardsArray)
+            updateViewFromModel()
         }
-        updateViewFromModel()
     }
     
     
