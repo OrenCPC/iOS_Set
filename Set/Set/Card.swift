@@ -62,14 +62,12 @@ struct Card: Hashable, Equatable {
     }
     
     
-    
-    
-    
     let number: CardNumber
+    
     let shape: CardShape
-//    let shading : DeckOfCards.CardShade
+    
     let shading : CardShade
-
+    
     let color : CardColor
     
     private var identifier: Int
@@ -88,9 +86,7 @@ struct Card: Hashable, Equatable {
     }
     
     init(number: CardNumber, shape: CardShape, shading: CardShade, color: CardColor) {
-        
         self.identifier = Card.getUniqueIdentifier()
-        
         self.number = number
         self.shape = shape
         self.shading = shading

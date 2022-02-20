@@ -26,5 +26,4 @@ class DeckOfCards {
         }
         return deck
     }
-    
 }
