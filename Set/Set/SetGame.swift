@@ -55,6 +55,21 @@ struct SetGame {
         }
     }
     
+    mutating func executeCheat(matchingThreeCardsArray: [Card]) {
+        clearClickedCardsArray()
+        for i in 0..<matchingThreeCardsArray.count {
+            let indexOnScreen = cardChoices.firstIndex(of: matchingThreeCardsArray[i])
+            chooseCard(at: indexOnScreen!)
+            if isMatch { gameScore -= 2 }
+             else {
+//                print("match on screen or no 3 set")
+            }
+        }
+        print(clickedCards)
+        print()
+    }
+
+    
     func isSetOnScreen() -> [Card]? {
         for cardA in cardChoices {
             for cardB in cardChoices {

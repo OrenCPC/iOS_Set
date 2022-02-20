@@ -110,18 +110,26 @@ class ViewController: UIViewController {
         }
     }
     
-    
+    //TODO: Fix the function so that cheat will work
     @IBAction func touchCheat(_ sender: UIButton) {
 
         if let matchingThreeCardsArray = game.isSetOnScreen() ,!game.isMatch{
-            for i in 0..<matchingThreeCardsArray.count {
-                let indexOnScreen = game.cardChoices.firstIndex(of: matchingThreeCardsArray[i])
-                game.chooseCard(at: indexOnScreen!)
-                if game.isMatch { game.gameScore -= 2 }
-            }
+            game.executeCheat(matchingThreeCardsArray: matchingThreeCardsArray)
         }
         updateViewFromModel()
+
+        updateButtonsLabel()
     }
+            
+//            for i in 0..<matchingThreeCardsArray.count {
+//                let indexOnScreen = game.cardChoices.firstIndex(of: matchingThreeCardsArray[i])
+//                game.chooseCard(at: indexOnScreen!)
+//                if game.isMatch { game.gameScore -= 2 }
+//            }
+//        } else {
+//            print("match on screen or no 3 set")
+//        }
+      
 //
 //                if !cheatMode {
 //                    updateViewFromModel()
