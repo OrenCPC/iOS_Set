@@ -117,7 +117,6 @@ class ViewController: UIViewController {
             game.executeCheat(matchingThreeCardsArray: matchingThreeCardsArray)
         }
         updateViewFromModel()
-        updateButtonsLabel()
     }
     
     
@@ -131,18 +130,17 @@ class ViewController: UIViewController {
                 } else {
                     button.clearPaintButton()
                 }
-            } else {
-                if game.clickedCards.contains(card) {
+            } else if game.clickedCards.contains(card) {
                     if game.clickedCards.count == 3 {
                         button.paintButton(borderWidth: 3.0, borderColor: UIColor.red, cornerRadius: 8.0)
                     } else {
                         button.paintButton(borderWidth: 3.0, borderColor: UIColor.orange, cornerRadius: 8.0)
                     }
-                } else {
+            } else {
                     button.clearPaintButton()
                 }
             }
-        }
+        
         updateButtonsLabel()
         scoreCountLabel.text = "Score \(game.gameScore)"
     }
