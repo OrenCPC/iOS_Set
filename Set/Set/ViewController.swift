@@ -21,7 +21,7 @@ class ViewController: UIViewController {
     
     
     override func viewDidLoad() {
-        for index in 0..<numberOfCards {
+        for index in 0..<game.getNumberOfCardsOnScreen() {
             let button = cardButtons[index]
             button.backgroundColor = UIColor.white
             updateButtonsLabel()
@@ -40,7 +40,7 @@ class ViewController: UIViewController {
             let attributedString = NSAttributedString(string: "")
             button.setAttributedTitle(attributedString, for: .normal)
         }
-        for index in 0..<numberOfCards {
+        for index in 0..<game.getNumberOfCardsOnScreen() {
             let button = cardButtons[index]
             button.backgroundColor = UIColor.white
             updateButtonsLabel()
@@ -68,7 +68,7 @@ class ViewController: UIViewController {
     
     
     private func updateButtonsLabel() {
-        for index in 0..<numberOfCards {
+        for index in 0..<game.getNumberOfCardsOnScreen() {
             let button = cardButtons[index]
             let card = game.cardChoices[index]
             let attributes: [NSAttributedString.Key: Any] = [
@@ -82,30 +82,28 @@ class ViewController: UIViewController {
         }
     }
     
-    
+    //TODO: Update to MVC
     @IBAction func addThreeCards(_ sender: UIButton) {
-        if game.cards.count >= 3 {
-            if game.isMatch {
-                game.replaceCardsInTable(number: 3)
-            } else {
-                if cardButtons.count >= numberOfCards + 3 {
-                    game.punishIfSetExists()
-                    game.addCardsToTheTableCards(number: 3)
-                    for _ in 0...2 {
-                        let button = cardButtons[numberOfCards]
+        
+        
+        let numberOfCardsOnScreen = game.getNumberOfCardsOnScreen()
+        if cardButtons.count >= numberOfCardsOnScreen + 3 || game.isMatch {
+            game.handleDealCards()
+            if cardButtons.count >= numberOfCardsOnScreen + 3, !game.isMatch {
+                    for index in 0..<game.getNumberOfCardsOnScreen() {
+                        let button = cardButtons[index]
                         button.backgroundColor = UIColor.white
-                        numberOfCards += 1
-                    }
                 }
             }
         }
         updateButtonsLabel()
         updateViewFromModel()
     }
+
     
     
     @IBAction func touchCard(_ sender: UIButton) {
-        if let cardNumber = cardButtons.firstIndex(of: sender), cardNumber < numberOfCards {
+        if let cardNumber = cardButtons.firstIndex(of: sender), cardNumber < game.getNumberOfCardsOnScreen() {
             game.chooseCard(at: cardNumber)
             updateViewFromModel()
         }
@@ -121,7 +119,7 @@ class ViewController: UIViewController {
     
     
     func updateViewFromModel() {
-        for index in 0..<numberOfCards {
+        for index in 0..<game.getNumberOfCardsOnScreen() {
             let button = cardButtons[index]
             let card = game.cardChoices[index]
             if game.isMatch, game.clickedCards.contains(card) {

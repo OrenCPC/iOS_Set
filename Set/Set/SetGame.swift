@@ -160,10 +160,10 @@ struct SetGame {
     
     
     mutating func addCardsToTheTableCards(number: Int) {
-        for _ in 0...number {
+        for _ in 0..<number {
             cardChoices += [cards.remove(at: 0)]
         }
-        if isSetOnScreen() != nil { gameScore -= 3 }
+//        if isSetOnScreen() != nil { gameScore -= 3 }
     }
     
     mutating func replaceCardsInTable(number: Int) {
@@ -171,6 +171,21 @@ struct SetGame {
         clearClickedCardsArray()
         isMatch = false
     }
+    
+    func getNumberOfCardsOnScreen () -> Int {
+        return cardChoices.count
+    }
+    
+    mutating func handleDealCards () {
+        if cards.count >= 3 {
+            if isMatch { replaceCardsInTable(number: 3) }
+            else {
+                punishIfSetExists()
+                addCardsToTheTableCards(number: 3)
+            }
+        }
+    }
+    
     
     init(numberOfCards: Int) {
         previousClick = Date()
