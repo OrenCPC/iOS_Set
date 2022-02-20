@@ -8,12 +8,152 @@
 import UIKit
 
 class ViewController: UIViewController {
-
+    
+    @IBOutlet var cardButtons: [UIButton]!
+    
+    var numberOfCards = 12
+    
+    var cheatMode = false
+    
+    private lazy var game = SetGame(numberOfCards: numberOfCards)
+    
+    @IBOutlet private weak var scoreCountLabel: UILabel!
+    
+    
+    func drawTheBeginningOfTheGame() {
+        for index in 0..<game.getNumberOfCardsOnScreen() {
+            let button = cardButtons[index]
+            button.backgroundColor = UIColor.white
+            updateButtonsLabel()
+        }
+    }
+    
+    
     override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        drawTheBeginningOfTheGame()
+    }
+    
+    
+    @IBAction func resetGame(_ sender: UIButton) {
+        numberOfCards = 12
+        game = SetGame(numberOfCards: numberOfCards)
+        for index in cardButtons.indices {
+            let button = cardButtons[index]
+            button.backgroundColor = UIColor.clear
+            button.layer.borderColor = UIColor.clear.cgColor
+            button.setTitle("", for: UIControl.State.normal)
+            let attributedString = NSAttributedString(string: "")
+            button.setAttributedTitle(attributedString, for: .normal)
+        }
+        drawTheBeginningOfTheGame()
+        updateViewFromModel()
+    }
+    
+    
+    private func getStrokeWidth(card: Card) -> Double {
+        switch (card.shading) {
+        case .solid: return -15.0
+        case .striped: return 0.0
+        default: return 10.0
+        }
+    }
+    
+    
+    private func getForegroundColor(card: Card) -> UIColor {
+        switch (card.shading) {
+        case .solid: return card.color.getUIColor().withAlphaComponent(1.0)
+        case .striped: return card.color.getUIColor().withAlphaComponent(0.15)
+        default: return card.color.getUIColor()
+        }
+    }
+    
+    
+    private func updateButtonsLabel() {
+        for index in 0..<game.getNumberOfCardsOnScreen() {
+            let button = cardButtons[index]
+            let card = game.cardChoices[index]
+            let attributes: [NSAttributedString.Key: Any] = [
+                .strokeWidth : getStrokeWidth(card: card),
+                .foregroundColor: getForegroundColor(card: card),
+                .strokeColor : card.color.getUIColor()
+            ]
+            let attributedString = NSAttributedString(string: String(repeating: "\(card.shape.getShapeString())", count: card.number.getNumberInt()), attributes: attributes)
+            
+            button.setAttributedTitle(attributedString, for: .normal)
+        }
+    }
+    
+    @IBAction func addThreeCards(_ sender: UIButton) {
+        let numberOfCardsOnScreen = game.getNumberOfCardsOnScreen()
+        if cardButtons.count >= numberOfCardsOnScreen + 3 || game.isMatch {
+            game.handleDealCards()
+            if cardButtons.count >= numberOfCardsOnScreen + 3, !game.isMatch {
+                    for index in 0..<game.getNumberOfCardsOnScreen() {
+                        let button = cardButtons[index]
+                        button.backgroundColor = UIColor.white
+                }
+            }
+        }
+        updateButtonsLabel()
+        updateViewFromModel()
     }
 
-
+    
+    
+    @IBAction func touchCard(_ sender: UIButton) {
+        if let cardNumber = cardButtons.firstIndex(of: sender), cardNumber < game.getNumberOfCardsOnScreen() {
+            game.chooseCard(at: cardNumber)
+            updateViewFromModel()
+        }
+    }
+    
+    
+    @IBAction func touchCheat(_ sender: UIButton) {
+        if let matchingThreeCardsArray = game.isSetOnScreen() ,!game.isMatch {
+            game.executeCheat(matchingThreeCardsArray: matchingThreeCardsArray)
+            updateViewFromModel()
+        }
+    }
+    
+    
+    func updateViewFromModel() {
+        for index in 0..<game.getNumberOfCardsOnScreen() {
+            let button = cardButtons[index]
+            let card = game.cardChoices[index]
+            if game.isMatch, game.clickedCards.contains(card) {
+                if game.cards.count > 0 {
+                    button.paintButton(borderWidth: 3.0, borderColor: UIColor.green, cornerRadius: 8.0)
+                } else {
+                    button.clearPaintButton()
+                }
+            } else if game.clickedCards.contains(card) {
+                    if game.clickedCards.count == 3 {
+                        button.paintButton(borderWidth: 3.0, borderColor: UIColor.red, cornerRadius: 8.0)
+                    } else {
+                        button.paintButton(borderWidth: 3.0, borderColor: UIColor.orange, cornerRadius: 8.0)
+                    }
+            } else {
+                    button.clearPaintButton()
+                }
+            }
+        
+        updateButtonsLabel()
+        scoreCountLabel.text = "Score \(game.gameScore)"
+    }
 }
 
+
+extension UIButton {
+    func paintButton (borderWidth: Double, borderColor: UIColor, cornerRadius: Double) {
+        layer.borderWidth = borderWidth
+        layer.borderColor = borderColor.cgColor
+        layer.cornerRadius = cornerRadius
+    }
+    
+    
+    func clearPaintButton () {
+        layer.borderWidth = 0
+        layer.borderColor = UIColor.clear.cgColor
+        layer.cornerRadius = 0
+    }
+}
