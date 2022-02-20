@@ -20,12 +20,17 @@ class ViewController: UIViewController {
     @IBOutlet private weak var scoreCountLabel: UILabel!
     
     
-    override func viewDidLoad() {
+    func drawTheBeginningOfTheGame() {
         for index in 0..<game.getNumberOfCardsOnScreen() {
             let button = cardButtons[index]
             button.backgroundColor = UIColor.white
             updateButtonsLabel()
         }
+    }
+    
+    
+    override func viewDidLoad() {
+        drawTheBeginningOfTheGame()
     }
     
     
@@ -40,11 +45,7 @@ class ViewController: UIViewController {
             let attributedString = NSAttributedString(string: "")
             button.setAttributedTitle(attributedString, for: .normal)
         }
-        for index in 0..<game.getNumberOfCardsOnScreen() {
-            let button = cardButtons[index]
-            button.backgroundColor = UIColor.white
-            updateButtonsLabel()
-        }
+        drawTheBeginningOfTheGame()
         updateViewFromModel()
     }
     
@@ -82,10 +83,7 @@ class ViewController: UIViewController {
         }
     }
     
-    //TODO: Update to MVC
     @IBAction func addThreeCards(_ sender: UIButton) {
-        
-        
         let numberOfCardsOnScreen = game.getNumberOfCardsOnScreen()
         if cardButtons.count >= numberOfCardsOnScreen + 3 || game.isMatch {
             game.handleDealCards()

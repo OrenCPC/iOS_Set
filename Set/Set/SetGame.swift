@@ -163,7 +163,6 @@ struct SetGame {
         for _ in 0..<number {
             cardChoices += [cards.remove(at: 0)]
         }
-//        if isSetOnScreen() != nil { gameScore -= 3 }
     }
     
     mutating func replaceCardsInTable(number: Int) {
