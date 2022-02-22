@@ -13,7 +13,13 @@ class ViewController: UIViewController {
     
     var gridButtons = [UIButton]()
     
-    @IBOutlet weak var gridView: UIView!
+    @IBOutlet weak var gridView: UIView! {
+        didSet {
+            let swipe = UISwipeGestureRecognizer(target: self, action: #selector(addThreeCards(_:)))
+            swipe.direction = [.down]
+            gridView.addGestureRecognizer(swipe)
+        }
+    }
 
     lazy var grid = Grid(layout: Grid.Layout.aspectRatio(1), frame: gridView.frame)
 
@@ -26,6 +32,7 @@ class ViewController: UIViewController {
     @IBOutlet private weak var scoreCountLabel: UILabel!
     
     
+    
     func createButtonsInitialDefinitions() {
         grid.cellCount = game.getNumberOfCardsOnScreen()
         gridButtons = []
@@ -36,7 +43,7 @@ class ViewController: UIViewController {
                 button.layer.borderWidth = 0.5
                 button.layer.borderColor = UIColor.black.cgColor
                 button.addTarget(self, action: #selector(touchCard), for: .touchUpInside)
-                self.view.addSubview(button)
+                self.gridView.addSubview(button)
                 gridButtons += [button]
             }
         }
@@ -107,7 +114,7 @@ class ViewController: UIViewController {
         game.handleDealCards()
         clearGridView()
         createButtonsInitialDefinitions()
-        updateViewFromModel() 
+        updateViewFromModel()
     }
 
 

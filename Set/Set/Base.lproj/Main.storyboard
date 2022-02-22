@@ -82,32 +82,30 @@
                                     </button>
                                 </subviews>
                             </stackView>
-                            <view contentMode="redraw" translatesAutoresizingMaskIntoConstraints="NO" id="uOI-qv-o9m">
-                                <rect key="frame" x="20" y="73" width="374" height="625"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <gestureRecognizers/>
-                                <connections>
-                                    <outletCollection property="gestureRecognizers" destination="jBw-KQ-hAD" appends="YES" id="hOI-x5-mYe"/>
-                                </connections>
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="joz-h5-s4g">
+                                <rect key="frame" x="20" y="44" width="339" height="638"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="374" id="FNF-Xj-LkY"/>
+                                </constraints>
                             </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" red="0.021054821088910103" green="0.57276695966720581" blue="0.98285382986068726" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstItem="uOI-qv-o9m" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="29" id="5OO-kc-Zv0"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="5NK-Eq-9kT" secondAttribute="trailing" constant="20" id="5fM-N3-Nrm"/>
                             <constraint firstItem="5NK-Eq-9kT" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="BAH-3F-9Aw"/>
+                            <constraint firstItem="joz-h5-s4g" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="GpE-Ub-NjY"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="UdY-Hf-CTu" secondAttribute="bottom" constant="20" id="Jo4-bC-4Xo"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="uOI-qv-o9m" secondAttribute="trailing" constant="20" id="OMj-IZ-0O5"/>
-                            <constraint firstItem="7Af-SQ-sA5" firstAttribute="top" secondItem="uOI-qv-o9m" secondAttribute="bottom" constant="27" id="Sqq-oc-tFb"/>
+                            <constraint firstItem="7Af-SQ-sA5" firstAttribute="top" secondItem="joz-h5-s4g" secondAttribute="bottom" constant="43" id="MLR-JS-4Ij"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="joz-h5-s4g" secondAttribute="trailing" constant="20" id="Ogg-IF-xI5"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="UdY-Hf-CTu" secondAttribute="trailing" constant="5" id="aMt-Qo-vcS"/>
-                            <constraint firstItem="uOI-qv-o9m" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="gKm-vG-Uni"/>
                             <constraint firstItem="UdY-Hf-CTu" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="5" id="nRk-LR-rYc"/>
+                            <constraint firstItem="joz-h5-s4g" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="qPo-vd-wVi"/>
                             <constraint firstItem="GtB-8T-CEe" firstAttribute="top" secondItem="5NK-Eq-9kT" secondAttribute="bottom" constant="5" id="wi0-tW-x0o"/>
                         </constraints>
                     </view>
                     <connections>
-                        <outlet property="gridView" destination="uOI-qv-o9m" id="sH8-hx-alX"/>
+                        <outlet property="gridView" destination="joz-h5-s4g" id="VA9-Z0-QoT"/>
                         <outlet property="scoreCountLabel" destination="VKr-1a-nVa" id="c0h-kJ-VJb"/>
                     </connections>
                 </viewController>
@@ -118,7 +116,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="79.6875" y="314.49275362318843"/>
+            <point key="canvasLocation" x="98.550724637681171" y="336.83035714285711"/>
         </scene>
     </scenes>
     <resources>
