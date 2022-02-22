@@ -94,6 +94,7 @@ struct SetGame {
         if clickedCards.count == 3, answerForMatch(cardsToBeChecked: clickedCards) {
             isMatch = true
             gameScore += 2
+            
         } else {
             gameScore -= 1
         }
@@ -111,10 +112,19 @@ struct SetGame {
             }
         }
     }
-    
+        
     
     mutating func fourCardsSelected(index: Int) {
         if isMatch {
+            if cards.count == 0 {
+                for i in 0..<clickedCards.count {
+                    if let locOfCard = cardChoices.firstIndex(of: clickedCards[i]) {
+                        cardChoices.remove(at: locOfCard)
+                    }
+                }
+                clearClickedCardsArray()
+
+        } else {
             if !clickedCards.contains(cardChoices[index]) {
                 replaceCards()
                 clearClickedCardsArray()
@@ -123,12 +133,14 @@ struct SetGame {
                 replaceCards()
                 clearClickedCardsArray()
             }
-        } else {
-            clearClickedCardsArray()
-            addCardIndexToClickedCards(index: index)
         }
-        isMatch = false
+        
+    } else {
+        clearClickedCardsArray()
+        addCardIndexToClickedCards(index: index)
     }
+    isMatch = false
+}
     
     
     mutating func chooseCard(at index: Int) {
