@@ -4,14 +4,11 @@
 //
 //  Created by Oren Dinur on 14/02/2022.
 //
-//TODO: Make more room between newgame and score, put grid inside gridview
 
 import UIKit
 
 class ViewController: UIViewController {
-    
-    @IBOutlet var cardButtons: [UIButton]!
-    
+        
     var gridButtons = [UIButton]()
     
     @IBOutlet weak var gridView: UIView! {
@@ -19,10 +16,11 @@ class ViewController: UIViewController {
             let swipe = UISwipeGestureRecognizer(target: self, action: #selector(addThreeCards(_:)))
             swipe.direction = [.down]
             gridView.addGestureRecognizer(swipe)
+            
         }
     }
 
-    lazy var grid = Grid(layout: Grid.Layout.aspectRatio(2), frame: gridView.frame)
+    lazy var grid = Grid(layout: Grid.Layout.aspectRatio(2), frame: gridView.bounds)
 
     var InitialNumberOfCards = SetGame.getInitialCardsNumber()
         
@@ -30,8 +28,13 @@ class ViewController: UIViewController {
     
     @IBOutlet private weak var scoreCountLabel: UILabel!
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        self.grid.frame = gridView.bounds
+        self.redrawGrid()
+    }
     
-    
+   
     func initiateButtons() {
         grid.cellCount = game.getNumberOfCardsOnScreen()
         gridButtons = []
@@ -47,17 +50,15 @@ class ViewController: UIViewController {
             }
         }
         updateGridLabel()
-        
     }
     
     override func viewDidLoad() {
         initiateButtons()
         let rotate = UIRotationGestureRecognizer(target: self, action: #selector(shuffleCards))
         self.view.addGestureRecognizer(rotate)
-        
     }
     
-    func initiateGrid() {
+    func redrawGrid() {
         clearGridView()
         initiateButtons()
         updateCardsColorFromModel()
@@ -65,7 +66,7 @@ class ViewController: UIViewController {
     
     func initiateGameAndGrid() {
         game = SetGame(numberOfCards: InitialNumberOfCards)
-        initiateGrid()
+        redrawGrid()
     }
     
     
@@ -120,13 +121,13 @@ class ViewController: UIViewController {
        let cardsToBeAdded = game.getNumberOfCardsOnScreen() - InitialNumberOfCards
         initiateGameAndGrid()
         game.shuffleAllCards(addMore: cardsToBeAdded)
-       initiateGrid()
+       redrawGrid()
 
     }
     
     @IBAction func addThreeCards(_ sender: UIButton) {
         game.handleDealCards()
-        initiateGrid()
+        redrawGrid()
     }
 
 
@@ -143,7 +144,6 @@ class ViewController: UIViewController {
             updateCardsColorFromModel()
         }
     }
-    
     
 
     func updateCardsColorFromModel() {

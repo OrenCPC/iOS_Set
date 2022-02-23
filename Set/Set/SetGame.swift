@@ -20,7 +20,7 @@ struct SetGame {
     
     private(set) var DoClickedCardsMatch = false
     
-    private (set) var gameScore = 0
+    private(set) var gameScore = 0
     
     
     mutating func addCardIndexToClickedCards(index: Int) {
@@ -102,7 +102,6 @@ struct SetGame {
     
     mutating func shuffleAllCards(addMore numberOfCards: Int) {
         addCardsToTheTableCards(number: numberOfCards)
-        
     }
     
     mutating func replaceCards() {

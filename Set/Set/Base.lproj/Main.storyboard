@@ -25,7 +25,7 @@
                                                 <rect key="frame" x="0.0" y="0.0" width="374" height="50"/>
                                                 <subviews>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GtB-8T-CEe">
-                                                        <rect key="frame" x="0.0" y="0.0" width="208.5" height="50"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="226.5" height="50"/>
                                                         <state key="normal" title="Button"/>
                                                         <buttonConfiguration key="configuration" style="plain" title="New Game">
                                                             <backgroundConfiguration key="background">
@@ -39,8 +39,8 @@
                                                         </connections>
                                                     </button>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Score: 0" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VKr-1a-nVa">
-                                                        <rect key="frame" x="228.5" y="0.0" width="145.5" height="50"/>
-                                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="40"/>
+                                                        <rect key="frame" x="246.5" y="0.0" width="127.5" height="50"/>
+                                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="35"/>
                                                         <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
@@ -52,7 +52,6 @@
                             </stackView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="joz-h5-s4g">
                                 <rect key="frame" x="20" y="64" width="374" height="638"/>
-                                <color key="backgroundColor" red="0.62217789888381958" green="0.88604676723480225" blue="0.91962283849716187" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </view>
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="XPx-sW-emY">
                                 <rect key="frame" x="20" y="722" width="374" height="62"/>
