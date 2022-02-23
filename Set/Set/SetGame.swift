@@ -100,9 +100,6 @@ struct SetGame {
         }
     }
     
-    mutating func shuffleAllCards(addMore numberOfCards: Int) {
-        addCardsToTheTableCards(number: numberOfCards)
-    }
     
     mutating func replaceCards() {
         for index in clickedCards.indices {

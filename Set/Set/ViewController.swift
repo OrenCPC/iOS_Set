@@ -16,7 +16,6 @@ class ViewController: UIViewController {
             let swipe = UISwipeGestureRecognizer(target: self, action: #selector(addThreeCards(_:)))
             swipe.direction = [.down]
             gridView.addGestureRecognizer(swipe)
-            
         }
     }
 
@@ -120,7 +119,7 @@ class ViewController: UIViewController {
    @objc func shuffleCards() {
        let cardsToBeAdded = game.getNumberOfCardsOnScreen() - InitialNumberOfCards
         initiateGameAndGrid()
-        game.shuffleAllCards(addMore: cardsToBeAdded)
+        game.addCardsToTheTableCards(number: cardsToBeAdded)
        redrawGrid()
 
     }
@@ -147,8 +146,6 @@ class ViewController: UIViewController {
     
 
     func updateCardsColorFromModel() {
-        clearGridView()
-        initiateButtons()
         for index in 0..<game.getNumberOfCardsOnScreen() {
             let view = gridButtons[index]
             let card = game.modelCards[index]
