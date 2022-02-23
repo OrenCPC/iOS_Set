@@ -4,6 +4,7 @@
 //
 //  Created by Oren Dinur on 14/02/2022.
 //
+//TODO: Make more room between newgame and score, put grid inside gridview
 
 import UIKit
 
@@ -21,19 +22,17 @@ class ViewController: UIViewController {
         }
     }
 
-    lazy var grid = Grid(layout: Grid.Layout.aspectRatio(1), frame: gridView.frame)
+    lazy var grid = Grid(layout: Grid.Layout.aspectRatio(2), frame: gridView.frame)
 
-    var numberOfCards = 12
-    
-    var cheatMode = false
-    
-    private lazy var game = SetGame(numberOfCards: numberOfCards)
+    var InitialNumberOfCards = SetGame.getInitialCardsNumber()
+        
+    private lazy var game = SetGame(numberOfCards: InitialNumberOfCards)
     
     @IBOutlet private weak var scoreCountLabel: UILabel!
     
     
     
-    func createButtonsInitialDefinitions() {
+    func initiateButtons() {
         grid.cellCount = game.getNumberOfCardsOnScreen()
         gridButtons = []
         for index in 0..<grid.cellCount {
@@ -51,17 +50,27 @@ class ViewController: UIViewController {
         
     }
     
-    
     override func viewDidLoad() {
-        createButtonsInitialDefinitions()
+        initiateButtons()
+        let rotate = UIRotationGestureRecognizer(target: self, action: #selector(shuffleCards))
+        self.view.addGestureRecognizer(rotate)
+        
+    }
+    
+    func initiateGrid() {
+        clearGridView()
+        initiateButtons()
+        updateCardsColorFromModel()
+    }
+    
+    func initiateGameAndGrid() {
+        game = SetGame(numberOfCards: InitialNumberOfCards)
+        initiateGrid()
     }
     
     
     @IBAction func resetGame(_ sender: UIButton) {
-        game = SetGame(numberOfCards: 12)
-        clearGridView()
-        createButtonsInitialDefinitions()
-        updateViewFromModel()
+        initiateGameAndGrid()
     }
     
     
@@ -84,12 +93,8 @@ class ViewController: UIViewController {
     
 
     private func updateGridLabel() {
-//        if game.cards.count == 0 {
-//                    clearGridView()
-//                    createButtonsInitialDefinitions()
-//        }
         for index in 0..<grid.cellCount {
-                let card = game.cardChoices[index]
+                let card = game.modelCards[index]
                 let attributes: [NSAttributedString.Key: Any] = [
                     .strokeWidth : getStrokeWidth(card: card),
                     .foregroundColor: getForegroundColor(card: card),
@@ -99,7 +104,6 @@ class ViewController: UIViewController {
                 
                 gridButtons[index].setAttributedTitle(attributedString, for: .normal)
             }
-            
         }
     
     func clearGridView() {
@@ -110,42 +114,46 @@ class ViewController: UIViewController {
     }
     
     
+    
+    
+   @objc func shuffleCards() {
+       let cardsToBeAdded = game.getNumberOfCardsOnScreen() - InitialNumberOfCards
+        initiateGameAndGrid()
+        game.shuffleAllCards(addMore: cardsToBeAdded)
+       initiateGrid()
+
+    }
+    
     @IBAction func addThreeCards(_ sender: UIButton) {
         game.handleDealCards()
-        clearGridView()
-        createButtonsInitialDefinitions()
-        updateViewFromModel()
+        initiateGrid()
     }
 
 
     @objc func touchCard(_ sender: UIButton) {
         if let cardNumber = gridButtons.firstIndex(of: sender) {
             game.chooseCard(at: cardNumber)
-            updateViewFromModel()
+            updateCardsColorFromModel()
         }
     }
     
     @IBAction func touchCheat(_ sender: UIButton) {
-        if let matchingThreeCardsArray = game.isSetOnScreen() ,!game.isMatch {
+        if let matchingThreeCardsArray = game.isSetOnScreen() ,!game.DoClickedCardsMatch {
             game.executeCheat(matchingThreeCardsArray: matchingThreeCardsArray)
-            updateViewFromModel()
+            updateCardsColorFromModel()
         }
     }
     
     
 
-    func updateViewFromModel() {
+    func updateCardsColorFromModel() {
         clearGridView()
-        createButtonsInitialDefinitions()
+        initiateButtons()
         for index in 0..<game.getNumberOfCardsOnScreen() {
             let view = gridButtons[index]
-            let card = game.cardChoices[index]
-            if game.isMatch, game.clickedCards.contains(card) {
-//                if game.cards.count > 0 {
+            let card = game.modelCards[index]
+            if game.DoClickedCardsMatch, game.clickedCards.contains(card) {
                     view.paintButton(borderWidth: 3.0, borderColor: UIColor.green, cornerRadius: 8.0)
-//                } else {
-//                    view.clearPaintButton()
-//                }
             } else if game.clickedCards.contains(card) {
                     if game.clickedCards.count == 3 {
                         view.paintButton(borderWidth: 3.0, borderColor: UIColor.red, cornerRadius: 8.0)
@@ -156,13 +164,11 @@ class ViewController: UIViewController {
                 view.clearPaintButton()
                 }
         }
-        
         updateGridLabel()
         scoreCountLabel.text = "Score \(game.gameScore)"
     }
-        
 }
-
+        
 
 extension UIButton {
     func paintButton (borderWidth: Double, borderColor: UIColor, cornerRadius: Double) {

@@ -4,18 +4,17 @@
 //
 //  Created by Oren Dinur on 14/02/2022.
 //
-//TODO: delete the CustomStringConvertible if not used 
 import Foundation
 import UIKit
 
-struct Card: Hashable, Equatable, CustomStringConvertible {
+struct Card: Hashable, Equatable {
     
     var description: String { return "\(color)\(shading)\(shape)\(number)"}
     
     
     var hashValue: Int { return identifier }
     
-    enum CardNumber: CaseIterable, CustomStringConvertible {
+    enum CardNumber: CaseIterable {
         var description: String { return String(getNumberInt()) }
         
         case first, second, third
@@ -32,7 +31,7 @@ struct Card: Hashable, Equatable, CustomStringConvertible {
         }
     }
     
-    enum CardShape: CaseIterable, CustomStringConvertible {
+    enum CardShape: CaseIterable {
                 
         case circle, triangle, square
         
@@ -50,7 +49,7 @@ struct Card: Hashable, Equatable, CustomStringConvertible {
 
     }
     
-    enum CardShade: CaseIterable, CustomStringConvertible {
+    enum CardShade: CaseIterable {
         var description: String {
             switch(self) {
             case .solid: return "solid"
@@ -62,7 +61,7 @@ struct Card: Hashable, Equatable, CustomStringConvertible {
         case solid, striped, open
     }
     
-    enum CardColor: CaseIterable, CustomStringConvertible {
+    enum CardColor: CaseIterable {
         var description: String {
             switch(self) {
             case .red: return "red"
