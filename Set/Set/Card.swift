@@ -4,15 +4,19 @@
 //
 //  Created by Oren Dinur on 14/02/2022.
 //
-
 import Foundation
 import UIKit
 
 struct Card: Hashable, Equatable {
     
+    var description: String { return "\(color)\(shading)\(shape)\(number)"}
+    
+    
     var hashValue: Int { return identifier }
     
     enum CardNumber: CaseIterable {
+        var description: String { return String(getNumberInt()) }
+        
         case first, second, third
         
         func getNumberInt() -> Int {
@@ -28,6 +32,7 @@ struct Card: Hashable, Equatable {
     }
     
     enum CardShape: CaseIterable {
+                
         case circle, triangle, square
         
         func getShapeString() -> String {
@@ -40,13 +45,31 @@ struct Card: Hashable, Equatable {
                 return "■"
             }
         }
+        var description: String { return getShapeString() }
+
     }
     
     enum CardShade: CaseIterable {
+        var description: String {
+            switch(self) {
+            case .solid: return "solid"
+            case.striped: return "striped"
+            case.open: return "open"
+            }
+        }
+        
         case solid, striped, open
     }
     
     enum CardColor: CaseIterable {
+        var description: String {
+            switch(self) {
+            case .red: return "red"
+            case.green: return "green"
+            case.purple: return "purple"
+            }
+        }
+        
         case red, green, purple
         
         func getUIColor() -> UIColor {
