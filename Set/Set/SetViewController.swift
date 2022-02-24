@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class SetViewController: UIViewController {
         
     var gridButtons = [UIButton]()
     
@@ -74,7 +74,7 @@ class ViewController: UIViewController {
     }
     
     
-    private func getStrokeWidth(card: Card) -> Double {
+    private func getStrokeWidth(card: SetCard) -> Double {
         switch (card.shading) {
         case .solid: return -15.0
         case .striped: return 0.0
@@ -83,7 +83,7 @@ class ViewController: UIViewController {
     }
     
     
-    private func getForegroundColor(card: Card) -> UIColor {
+    private func getForegroundColor(card: SetCard) -> UIColor {
         switch (card.shading) {
         case .solid: return card.color.getUIColor().withAlphaComponent(1.0)
         case .striped: return card.color.getUIColor().withAlphaComponent(0.15)
@@ -113,6 +113,29 @@ class ViewController: UIViewController {
         grid.cellCount = 0
     }
     
+    func reframeButtons() {
+        let prevAmountOfCardsOnScreen = grid.cellCount
+        grid.cellCount = game.getNumberOfCardsOnScreen()
+        for index in 0..<prevAmountOfCardsOnScreen {
+            if let size = grid[index] {
+                gridButtons[index].frame = size
+                
+            }
+        }
+        for index in 0..<SetGame.getAmountOfCardsToAdd() {
+            if let size = grid[index + prevAmountOfCardsOnScreen] {
+                let button = UIButton(frame: size)
+                button.backgroundColor = UIColor.white
+                button.layer.borderWidth = 0.5
+                button.layer.borderColor = UIColor.black.cgColor
+                button.addTarget(self, action: #selector(touchCard), for: .touchUpInside)
+                self.gridView.addSubview(button)
+                gridButtons += [button]
+            }
+        }
+        updateGridLabel()
+    }
+    
     
     
     
@@ -126,7 +149,8 @@ class ViewController: UIViewController {
     
     @IBAction func addThreeCards(_ sender: UIButton) {
         game.handleDealCards()
-        redrawGrid()
+//        redrawGrid()
+        reframeButtons()
     }
 
 

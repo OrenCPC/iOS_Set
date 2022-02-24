@@ -10,11 +10,11 @@ import UIKit
 
 struct SetGame {
     
-    var cards = Array <Card>()
+    var cards = Array <SetCard>()
     
-    private(set) var clickedCards = Array <Card>()
+    private(set) var clickedCards = Array <SetCard>()
     
-    private(set) var modelCards = Array <Card>()
+    private(set) var modelCards = Array <SetCard>()
     
     private var previousClickTime: Date
     
@@ -46,7 +46,7 @@ struct SetGame {
     }
     
     
-    mutating func executeCheat(matchingThreeCardsArray: [Card]) {
+    mutating func executeCheat(matchingThreeCardsArray: [SetCard]) {
         clearClickedCardsArray()
         for i in 0..<matchingThreeCardsArray.count {
             let indexOnScreen = modelCards.firstIndex(of: matchingThreeCardsArray[i])
@@ -56,7 +56,7 @@ struct SetGame {
     }
     
     
-    func isSetOnScreen() -> [Card]? {
+    func isSetOnScreen() -> [SetCard]? {
         for cardA in modelCards {
             for cardB in modelCards {
                 for cardC in modelCards {
@@ -72,10 +72,10 @@ struct SetGame {
     }
     
     
-    func answerForMatch(cardsToBeChecked: [Card]) -> Bool {
+    func answerForMatch(cardsToBeChecked: [SetCard]) -> Bool {
         var numbersSet = Set<Int>()
         var shapesSet = Set<String>()
-        var shadingsSet = Set<Card.CardShade>()
+        var shadingsSet = Set<SetCard.CardShade>()
         var colorsSet = Set<UIColor>()
         cardsToBeChecked.forEach {
             if let cardIndex = modelCards.firstIndex(of: $0) {
@@ -200,7 +200,7 @@ struct SetGame {
     
     init(numberOfCards: Int) {
         previousClickTime = Date()
-        cards = DeckOfCards.getInitialDeck()
+        cards = DeckOfSetCards.getInitialDeck()
         cards.shuffle()
         for _ in 0..<numberOfCards {
             modelCards += [cards.remove(at: 0)]
@@ -212,6 +212,10 @@ struct SetGame {
 extension SetGame {
    static func getInitialCardsNumber() -> Int {
         return 12
+    }
+    
+    static func getAmountOfCardsToAdd() -> Int {
+        return 3
     }
 }
 
