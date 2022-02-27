@@ -9,7 +9,6 @@ import UIKit
 
 class SetViewController: UIViewController {
     
-        
     var gridButtons = [UIButton]()
     
     @IBOutlet weak var gridView: UIView! {
@@ -30,20 +29,13 @@ class SetViewController: UIViewController {
     
     @IBOutlet private weak var scoreCountLabel: UILabel!
     
-//     override func layoutSubViews () {
-//        super.viewDidLayoutSubviews()
-//
-//        grid.frame = gridView.bounds
-//    }
-    
-//    override func viewDidLayoutSubviews() {
-//        super.viewDidLayoutSubviews()
-//        self.grid.frame = gridView.bounds
-//    }
-    
-
-    
-    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        if self.grid.frame != gridView.bounds{
+            self.grid.frame = gridView.bounds
+            redrawGrid()
+        }
+    }
    
     func initiateButtons() {
         grid.cellCount = game.getNumberOfCardsOnScreen()
@@ -146,7 +138,7 @@ class SetViewController: UIViewController {
                 button.addTarget(self, action: #selector(self.touchCard), for: .touchUpInside)
 
                 UIViewPropertyAnimator.runningPropertyAnimator(
-                    withDuration: 1,
+                    withDuration: 0.6,
                     delay: 0,
                     options: [],
                     animations: {
@@ -155,19 +147,27 @@ class SetViewController: UIViewController {
                     completion: { finished in
                         UIViewPropertyAnimator.runningPropertyAnimator (
                             withDuration: 1,
-                            delay: 0,
+                            delay: 1,
                             options: [],
                             animations: {
                                 button.transform = CGAffineTransform.identity.scaledBy(x: 1, y: 1)
                                 button.frame = size
                                 
-                            }
+                            },
+                            completion: {finished in
+                                UIViewPropertyAnimator.runningPropertyAnimator (
+                                    withDuration: 1,
+                                    delay: 1,
+                                    options: [],
+                                    animations: {}
+                                
+                            )}
                         )
                     })
         
                     }
 
-                    }
+                }
         updateGridLabel()
 
     }
