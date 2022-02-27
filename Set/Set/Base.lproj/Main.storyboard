@@ -9,7 +9,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Set-->
+        <!--Set View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="SetViewController" customModule="Set" customModuleProvider="target" sceneMemberID="viewController">
@@ -95,6 +95,7 @@
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" red="0.021054821088910103" green="0.57276695966720581" blue="0.98285382986068726" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="XPx-sW-emY" secondAttribute="trailing" constant="20" id="424-Oa-ryA"/>
                             <constraint firstItem="joz-h5-s4g" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="20" id="DUa-yV-4G2"/>
@@ -109,8 +110,8 @@
                             <constraint firstItem="joz-h5-s4g" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="sVP-Px-eqG"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Set" image="♦️" id="iqS-le-6zl">
-                        <color key="badgeColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <tabBarItem key="tabBarItem" title="" badgeValue="Set Game" selectedImage="♦️" id="iqS-le-6zl">
+                        <color key="badgeColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBarItem>
                     <connections>
                         <outlet property="gridView" destination="joz-h5-s4g" id="VA9-Z0-QoT"/>
@@ -194,8 +195,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="49"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <color key="barTintColor" systemColor="tertiarySystemGroupedBackgroundColor"/>
-                        <color key="selectedImageTintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="barTintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
                     <connections>
                         <segue destination="E36-ar-S63" kind="relationship" relationship="viewControllers" id="yHa-hx-cRB"/>
@@ -465,12 +466,13 @@
             </objects>
             <point key="canvasLocation" x="618.84057971014499" y="1144.4196428571429"/>
         </scene>
-        <!--Concentration-->
+        <!--Navigation Controller-->
         <scene sceneID="BWq-Rc-bU1">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="E36-ar-S63" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Concentration" image="🙇🏻‍♂️" id="evE-Ro-YwH">
+                    <tabBarItem key="tabBarItem" title="" badgeValue="Concentration" selectedImage="🙇🏻‍♂️" id="evE-Ro-YwH">
                         <color key="badgeColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <offsetWrapper key="titlePositionAdjustment" horizontal="7" vertical="0.0"/>
                     </tabBarItem>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="5Oq-j1-w9u">
@@ -501,9 +503,6 @@
         </systemColor>
         <systemColor name="tertiarySystemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="tertiarySystemGroupedBackgroundColor">
-            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
