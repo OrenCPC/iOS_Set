@@ -10,11 +10,13 @@ import UIKit
 
 struct SetGame {
     
-    var cards = Array <SetCard>()
+    var deckCards = Array <SetCard>()
+    
+    private(set) var lastMatchingCardsIndexes = Array<Int>()
     
     private(set) var clickedCards = Array <SetCard>()
     
-    private(set) var modelCards = Array <SetCard>()
+    private(set) var modelTableCards = Array <SetCard>()
     
     private var previousClickTime: Date
     
@@ -24,10 +26,10 @@ struct SetGame {
     
     
     mutating func addCardIndexToClickedCards(index: Int) {
-        if !clickedCards.contains(modelCards[index]) {
-            clickedCards += [modelCards[index]]
+        if !clickedCards.contains(modelTableCards[index]) {
+            clickedCards += [modelTableCards[index]]
         } else {
-            if let indexOfCardPressedTwice = clickedCards.firstIndex(of: modelCards[index]) {
+            if let indexOfCardPressedTwice = clickedCards.firstIndex(of: modelTableCards[index]) {
                 clickedCards.remove(at: indexOfCardPressedTwice)
                 gameScore -= 1
             }
@@ -49,7 +51,7 @@ struct SetGame {
     mutating func executeCheat(matchingThreeCardsArray: [SetCard]) {
         clearClickedCardsArray()
         for i in 0..<matchingThreeCardsArray.count {
-            let indexOnScreen = modelCards.firstIndex(of: matchingThreeCardsArray[i])
+            let indexOnScreen = modelTableCards.firstIndex(of: matchingThreeCardsArray[i])
             chooseCard(at: indexOnScreen!)
             if DoClickedCardsMatch { gameScore -= 2 }
         }
@@ -57,9 +59,9 @@ struct SetGame {
     
     
     func isSetOnScreen() -> [SetCard]? {
-        for cardA in modelCards {
-            for cardB in modelCards {
-                for cardC in modelCards {
+        for cardA in modelTableCards {
+            for cardB in modelTableCards {
+                for cardC in modelTableCards {
                     if cardA != cardB, cardB != cardC, cardC != cardA {
                         if answerForMatch(cardsToBeChecked: [cardA,cardB,cardC]) {
                             return [cardA,cardB,cardC]
@@ -78,11 +80,11 @@ struct SetGame {
         var shadingsSet = Set<SetCard.CardShade>()
         var colorsSet = Set<UIColor>()
         cardsToBeChecked.forEach {
-            if let cardIndex = modelCards.firstIndex(of: $0) {
-                numbersSet.insert(modelCards[cardIndex].number.getNumberInt())
-                shapesSet.insert(modelCards[cardIndex].shape.getShapeString())
-                shadingsSet.insert(modelCards[cardIndex].shading)
-                colorsSet.insert(modelCards[cardIndex].color.getUIColor())
+            if let cardIndex = modelTableCards.firstIndex(of: $0) {
+                numbersSet.insert(modelTableCards[cardIndex].number.getNumberInt())
+                shapesSet.insert(modelTableCards[cardIndex].shape.getShapeString())
+                shadingsSet.insert(modelTableCards[cardIndex].shading)
+                colorsSet.insert(modelTableCards[cardIndex].color.getUIColor())
             }
         }
         return numbersSet.count != 2 && shapesSet.count != 2 && shadingsSet.count != 2 && colorsSet.count != 2
@@ -94,6 +96,9 @@ struct SetGame {
         if clickedCards.count == 3, answerForMatch(cardsToBeChecked: clickedCards) {
             DoClickedCardsMatch = true
             gameScore += 2
+//            if deckCards.count == 0 {
+//                modelTableCards.count -= 3
+//            }
             
         } else {
             gameScore -= 1
@@ -103,9 +108,9 @@ struct SetGame {
     
     mutating func replaceCards() {
         for index in clickedCards.indices {
-            if cards.count > 0 {
-                if let locOfCard = modelCards.firstIndex(of: clickedCards[index]) {
-                    modelCards[locOfCard] = cards.remove(at: index)
+            if deckCards.count > 0 {
+                if let locOfCard = modelTableCards.firstIndex(of: clickedCards[index]) {
+                    modelTableCards[locOfCard] = deckCards.remove(at: index)
                 }
             } else {
                 break
@@ -116,16 +121,17 @@ struct SetGame {
     
     mutating func fourCardsSelected(index: Int) {
         if DoClickedCardsMatch {
-            if cards.count == 0 {
+            if deckCards.count == 0 {
                 for i in 0..<clickedCards.count {
-                    if let locOfCard = modelCards.firstIndex(of: clickedCards[i]) {
-                        modelCards.remove(at: locOfCard)
+                    if let locOfCard = modelTableCards.firstIndex(of: clickedCards[i]) {
+                        lastMatchingCardsIndexes += [locOfCard]
+                        modelTableCards.remove(at: locOfCard)
                     }
                 }
                 clearClickedCardsArray()
 
         } else {
-            if !clickedCards.contains(modelCards[index]) {
+            if !clickedCards.contains(modelTableCards[index]) {
                 replaceCards()
                 clearClickedCardsArray()
                 addCardIndexToClickedCards(index: index)
@@ -173,7 +179,7 @@ struct SetGame {
     
     mutating func addCardsToTheTableCards(number: Int) {
         for _ in 0..<number {
-            modelCards += [cards.remove(at: 0)]
+            modelTableCards += [deckCards.remove(at: 0)]
         }
     }
     
@@ -184,11 +190,11 @@ struct SetGame {
     }
     
     func getNumberOfCardsOnScreen () -> Int {
-        return modelCards.count
+        return modelTableCards.count
     }
     
     mutating func handleDealCards () {
-        if cards.count >= 3 {
+        if deckCards.count >= 3 {
             if DoClickedCardsMatch { replaceCardsInTable(number: 3) }
             else {
                 punishIfSetExists()
@@ -200,10 +206,10 @@ struct SetGame {
     
     init(numberOfCards: Int) {
         previousClickTime = Date()
-        cards = DeckOfSetCards.getInitialDeck()
-        cards.shuffle()
+        deckCards = DeckOfSetCards.getInitialDeck()
+        deckCards.shuffle()
         for _ in 0..<numberOfCards {
-            modelCards += [cards.remove(at: 0)]
+            modelTableCards += [deckCards.remove(at: 0)]
         }
         clearClickedCardsArray()
     }
@@ -215,6 +221,10 @@ extension SetGame {
     }
     
     static func getAmountOfCardsToAdd() -> Int {
+        return 3
+    }
+    
+    static func getAmountOfCardsToDelete() -> Int {
         return 3
     }
 }
