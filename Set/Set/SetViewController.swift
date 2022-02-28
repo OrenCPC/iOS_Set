@@ -147,7 +147,6 @@ class SetViewController: UIViewController {
         initiateGameAndGrid()
         game.addCardsToTheTableCards(number: cardsToBeAdded)
        redrawGrid()
-
     }
     
     @IBAction func addThreeCards(_ sender: UIButton) {

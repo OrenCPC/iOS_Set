@@ -106,7 +106,7 @@ struct SetGame {
         for index in clickedCards.indices {
             if deckCards.count > 0 {
                 if let locOfCard = modelTableCards.firstIndex(of: clickedCards[index]) {
-                    modelTableCards[locOfCard] = deckCards.remove(at: index)
+                    modelTableCards[locOfCard] = deckCards.remove(at: 0)
                 }
             } else {
                 break
