@@ -7,12 +7,13 @@
 import Foundation
 import UIKit
 
-struct Card: Hashable, Equatable {
+struct SetCard: Hashable, Equatable {
     
     var description: String { return "\(color)\(shading)\(shape)\(number)"}
     
-    
-    var hashValue: Int { return identifier }
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(identifier)
+    }
     
     enum CardNumber: CaseIterable {
         var description: String { return String(getNumberInt()) }
@@ -98,7 +99,7 @@ struct Card: Hashable, Equatable {
     private static var identifierFactory = 0
 
         
-    static func == (lhs: Card, rhs: Card) -> Bool {
+    static func == (lhs: SetCard, rhs: SetCard) -> Bool {
         return lhs.identifier == rhs.identifier
     }
     
@@ -109,7 +110,7 @@ struct Card: Hashable, Equatable {
     }
     
     init(number: CardNumber, shape: CardShape, shading: CardShade, color: CardColor) {
-        self.identifier = Card.getUniqueIdentifier()
+        self.identifier = SetCard.getUniqueIdentifier()
         self.number = number
         self.shape = shape
         self.shading = shading
