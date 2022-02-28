@@ -151,6 +151,7 @@
                                         </buttonConfiguration>
                                         <connections>
                                             <action selector="changeTheme:" destination="7ii-lp-how" eventType="touchUpInside" id="dHk-s2-p2s"/>
+                                            <action selector="changeTitle:" destination="U6r-H0-O9h" eventType="touchUpInside" id="xun-6H-gOF"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pnq-Ih-bjS">
@@ -189,6 +190,7 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="NWg-tR-l47" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <exit id="U6r-H0-O9h" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="1330" y="-585"/>
         </scene>
@@ -451,6 +453,7 @@
                     <connections>
                         <outlet property="flipCountLabel" destination="3Mc-98-nPy" id="ZOL-BQ-MsZ"/>
                         <outlet property="scoreCountLabel" destination="1ex-YS-uCn" id="0PI-xY-GY0"/>
+                        <outlet property="topTitle" destination="yi4-SY-Jeu" id="Na3-kO-jLD"/>
                         <outletCollection property="cardButtons" destination="J6q-qF-1h2" collectionClass="NSMutableArray" id="LBH-yX-Mkc"/>
                         <outletCollection property="cardButtons" destination="HPm-wt-jeY" collectionClass="NSMutableArray" id="CwP-F7-unl"/>
                         <outletCollection property="cardButtons" destination="BRk-mq-Sf4" collectionClass="NSMutableArray" id="7KL-Dq-hS1"/>
