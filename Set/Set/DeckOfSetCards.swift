@@ -9,7 +9,7 @@ import UIKit
 import Foundation
 
 class DeckOfSetCards {
-        
+    
     private static var deck = Array <SetCard>()
     
     static func getInitialDeck() -> [SetCard] {

@@ -96,10 +96,6 @@ struct SetGame {
         if clickedCards.count == 3, answerForMatch(cardsToBeChecked: clickedCards) {
             DoClickedCardsMatch = true
             gameScore += 2
-//            if deckCards.count == 0 {
-//                modelTableCards.count -= 3
-//            }
-            
         } else {
             gameScore -= 1
         }

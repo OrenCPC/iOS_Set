@@ -17,7 +17,6 @@ class SetViewController: UIViewController {
             swipe.direction = [.down]
             gridView.addGestureRecognizer(swipe)
                     self.grid.frame = gridView.bounds
-
         }
     }
 
@@ -31,7 +30,7 @@ class SetViewController: UIViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        if self.grid.frame != gridView.bounds{
+        if self.grid.frame != gridView.bounds {
             self.grid.frame = gridView.bounds
             redrawGrid()
         }
@@ -71,11 +70,9 @@ class SetViewController: UIViewController {
         redrawGrid()
     }
     
-    
     @IBAction func resetGame(_ sender: UIButton) {
         initiateGameAndGrid()
     }
-    
     
     private func getStrokeWidth(card: SetCard) -> Double {
         switch (card.shading) {
@@ -85,7 +82,6 @@ class SetViewController: UIViewController {
         }
     }
     
-    
     private func getForegroundColor(card: SetCard) -> UIColor {
         switch (card.shading) {
         case .solid: return card.color.getUIColor().withAlphaComponent(1.0)
@@ -94,7 +90,6 @@ class SetViewController: UIViewController {
         }
     }
     
-
     private func updateGridLabel() {
         for index in 0..<grid.cellCount {
                 let card = game.modelTableCards[index]
@@ -120,60 +115,32 @@ class SetViewController: UIViewController {
         let prevAmountOfCardsOnScreen = grid.cellCount
         grid.cellCount = game.getNumberOfCardsOnScreen()
         
-        for index in 0..<prevAmountOfCardsOnScreen {
-            if let size = grid[index] {
-                gridButtons[index].frame = size
-            }
-        }
-        
-        for index in 0..<SetGame.getAmountOfCardsToAdd() {
-            if let size = grid[index + prevAmountOfCardsOnScreen] {
-//                let button = UIButton(frame: .zero)
-                let button = UIButton(frame: size)
-                button.backgroundColor = UIColor.white
-                button.layer.borderWidth = 0.5
-                button.layer.borderColor = UIColor.black.cgColor
-                self.gridView.addSubview(button)
-                self.gridButtons += [button]
-                button.addTarget(self, action: #selector(self.touchCard), for: .touchUpInside)
-
-                UIViewPropertyAnimator.runningPropertyAnimator(
-                    withDuration: 0.6,
-                    delay: 0,
-                    options: [],
-                    animations: {
-                        button.transform = CGAffineTransform.identity.scaledBy(x: 3.0, y: 3.0)
-                    },
-                    completion: { finished in
-                        UIViewPropertyAnimator.runningPropertyAnimator (
-                            withDuration: 1,
-                            delay: 1,
-                            options: [],
-                            animations: {
-                                button.transform = CGAffineTransform.identity.scaledBy(x: 1, y: 1)
-                                button.frame = size
-                                
-                            },
-                            completion: {finished in
-                                UIViewPropertyAnimator.runningPropertyAnimator (
-                                    withDuration: 1,
-                                    delay: 1,
-                                    options: [],
-                                    animations: {}
-                                
-                            )}
-                        )
-                    })
-        
+        UIViewPropertyAnimator.runningPropertyAnimator(
+            withDuration: 0.5,
+            delay: 0,
+            options: [.allowUserInteraction],
+            animations: {
+                for index in 0..<prevAmountOfCardsOnScreen {
+                    if let size = self.grid[index] {
+                        self.gridButtons[index].frame = size
                     }
-
                 }
-        updateGridLabel()
-
-    }
-    
-    
-    
+                
+                for index in 0..<SetGame.getAmountOfCardsToAdd() {
+                    if let size = self.grid[index + prevAmountOfCardsOnScreen] {
+                        let button = UIButton(frame: .zero)
+                        button.backgroundColor = UIColor.white
+                        button.layer.borderWidth = 0.5
+                        button.layer.borderColor = UIColor.black.cgColor
+                        self.gridView.addSubview(button)
+                        self.gridButtons += [button]
+                        button.addTarget(self, action: #selector(self.touchCard), for: .touchUpInside)
+                        button.frame = size
+                    }
+                }
+                })
+                updateGridLabel()
+            }
     
    @objc func shuffleCards() {
        let cardsToBeAdded = game.getNumberOfCardsOnScreen() - InitialNumberOfCards
@@ -186,6 +153,7 @@ class SetViewController: UIViewController {
     @IBAction func addThreeCards(_ sender: UIButton) {
         game.handleDealCards()
         reframeButtonsAfterAdd()
+        updateCardsColorFromModel()
     }
 
 
@@ -193,7 +161,7 @@ class SetViewController: UIViewController {
         if let cardNumber = gridButtons.firstIndex(of: sender) {
             game.chooseCard(at: cardNumber)
             if game.deckCards.count == 0, game.answerForMatch(cardsToBeChecked:  game.clickedCards)
-            {redrawGrid()}
+            { redrawGrid() }
             updateCardsColorFromModel()
         }
     }
@@ -201,16 +169,12 @@ class SetViewController: UIViewController {
     @IBAction func touchCheat(_ sender: UIButton) {
         if let matchingThreeCardsArray = game.isSetOnScreen() ,!game.DoClickedCardsMatch {
             game.executeCheat(matchingThreeCardsArray: matchingThreeCardsArray)
-//            if game.deckCards.count == 0 {grid.cellCount -= 3}
             updateCardsColorFromModel()
+            updateGridLabel()
         }
     }
     
-
     func updateCardsColorFromModel() {
-//        let numberOfCardsToBeColored = game.deckCards.count == 0 ?
-//        reframeButtons()
-
         for index in 0..<game.getNumberOfCardsOnScreen() {
             let view = gridButtons[index]
             let card = game.modelTableCards[index]
@@ -229,8 +193,6 @@ class SetViewController: UIViewController {
         updateGridLabel()
         scoreCountLabel.text = "Score \(game.gameScore)"
     }
-    
-    
 }
         
 

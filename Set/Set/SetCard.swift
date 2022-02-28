@@ -11,8 +11,9 @@ struct SetCard: Hashable, Equatable {
     
     var description: String { return "\(color)\(shading)\(shape)\(number)"}
     
-    
-    var hashValue: Int { return identifier }
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(identifier)
+    }
     
     enum CardNumber: CaseIterable {
         var description: String { return String(getNumberInt()) }
